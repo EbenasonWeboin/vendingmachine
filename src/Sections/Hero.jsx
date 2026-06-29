@@ -1,10 +1,11 @@
-import React, { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
+import gsap from "gsap";
 import colors from "../Colors/Colors";
 import BlueVM from "../assets/BlueVM.png";
 import GreenVM from "../assets/GreenVM.png";
 import PurpleVM from "../assets/PurpleVM.png";
 import YellowVM from "../assets/YellowVM.png";
-import { CreditCard, Clock, BarChart3, Leaf } from "lucide-react";
+import useBlurReveal from "../hooks/useBlurReveal";
 
 const vmImages = [
   { src: BlueVM, alt: "Blue Vending Machine" },
@@ -22,7 +23,23 @@ const partners = [
 ];
 
 const Hero = () => {
+  const sectionRef = useBlurReveal();
+  const rightRef = useRef(null);
   const [activeIndex, setActiveIndex] = useState(0);
+
+  useEffect(() => {
+    if (rightRef.current) {
+      gsap.fromTo(rightRef.current,
+        { opacity: 0, x: 120, scale: 0.92 },
+        {
+          opacity: 1, x: 0, scale: 1,
+          duration: 1.2,
+          delay: 0.3,
+          ease: "power3.out",
+        }
+      );
+    }
+  }, []);
 
   const next = useCallback(() => {
     setActiveIndex((prev) => (prev + 1) % vmImages.length);
@@ -34,6 +51,17 @@ const Hero = () => {
   }, [next]);
 
   const goTo = (i) => setActiveIndex(i);
+
+  const [slideOffset, setSlideOffset] = useState(160);
+
+  useEffect(() => {
+    const updateOffset = () => {
+      setSlideOffset(window.innerWidth < 1024 ? 80 : 160);
+    };
+    updateOffset();
+    window.addEventListener("resize", updateOffset);
+    return () => window.removeEventListener("resize", updateOffset);
+  }, []);
 
   const getSlideStyle = (i) => {
     const diff = (i - activeIndex + vmImages.length) % vmImages.length;
@@ -51,7 +79,7 @@ const Hero = () => {
     const abs = Math.abs(offset);
     const scale = abs === 0 ? 1 : 0.6;
     const opacity = abs === 0 ? 1 : abs === 1 ? 0.5 : 0;
-    const translateX = offset * 160;
+    const translateX = offset * slideOffset;
     const zIndex = 10 - abs;
 
     return {
@@ -67,34 +95,24 @@ const Hero = () => {
 
   return (
     <section
+      id="home"
+      ref={sectionRef}
       className="relative overflow-hidden font-sans"
       style={{ background: colors.primaryColor }}
     >
-      <div className="relative z-20 flex flex-col justify-center px-6 py-16 sm:px-10 lg:pl-16 lg:pr-[54%] lg:min-h-screen gap-5 lg:gap-6">
-        <p className="animate-fadeInUp text-xs font-medium tracking-[0.2em] uppercase text-white/60">
+      <div className="relative z-20 flex flex-col justify-center px-6 sm:px-10 lg:pl-16 lg:pr-[54%] lg:min-h-screen gap-5 sm:gap-5 lg:gap-6 py-16 sm:py-20 lg:py-0">
+        <p className="blur-reveal text-[0.6rem] sm:text-xs lg:text-sm font-semibold tracking-[0.2em] uppercase text-white/80">
           Cashless • Contactless • Fully Automatic
         </p>
         <h1
-          className="animate-fadeInUp text-4xl sm:text-5xl lg:text-7xl max-w-2xl font-bold text-white leading-[1.08]"
-          style={{ animationDelay: "0.1s" }}
+          className="blur-reveal text-[1.75rem] sm:text-5xl lg:text-7xl max-w-2xl font-bold text-white leading-[1.08]"
         >
           <span style={{ color: colors.secondaryColor }}>Smart Vending</span>{" "}
           Machines For Modern Spaces.
         </h1>
 
-        <div
-          className="lg:hidden relative w-full flex justify-center my-4 sm:my-6 z-10 animate-fadeInUp"
-          style={{ animationDelay: "0.15s" }}
-        >
-          <img
-            src={vmImages[activeIndex].src}
-            alt={vmImages[activeIndex].alt}
-            className="animate-float h-[280px] sm:h-[360px] w-auto object-contain drop-shadow-[0_25px_50px_rgba(0,0,0,0.25)] relative z-10"
-          />
-        </div>
         <p
-          className="animate-fadeInUp max-w-lg leading-relaxed text-white/60 text-sm sm:text-base"
-          style={{ animationDelay: "0.2s" }}
+          className="blur-reveal max-w-lg leading-relaxed text-white/60 text-[0.8rem] sm:text-sm lg:text-base"
         >
           We provide intelligent vending solutions designed for offices,
           schools, malls, hospitals, and public spaces. Our machines combine
@@ -102,8 +120,7 @@ const Hero = () => {
           experience.
         </p>
         <button
-          className="animate-fadeInUp group inline-flex items-center gap-2.5 bg-[#F8F6E8] text-[#2d3a1a] font-semibold text-sm py-3 px-7 rounded-full border-none cursor-pointer transition-all duration-300 w-fit hover:bg-white hover:-translate-y-0.5 hover:shadow-lg"
-          style={{ animationDelay: "0.3s" }}
+          className="blur-reveal group inline-flex items-center gap-2 bg-[#F8F6E8] text-[#2d3a1a] font-semibold text-xs sm:text-sm py-3 sm:py-3.5 px-6 sm:px-7 rounded-full border-none cursor-pointer transition-all duration-300 w-fit hover:bg-white hover:-translate-y-0.5 hover:shadow-lg"
         >
           Explore Machines
           <svg
@@ -123,29 +140,27 @@ const Hero = () => {
         </button>
 
         <div
-          className="animate-fadeInUp flex items-center gap-4 mt-4 lg:mt-6"
-          style={{ animationDelay: "0.4s" }}
+          className="blur-reveal flex items-center gap-3 sm:gap-4 mt-8 lg:mt-6 flex-wrap"
         >
-          <div className="flex -space-x-2.5">
+          <div className="flex -space-x-2.5 shrink-0">
             {partners.map((p, i) => (
               <div
                 key={i}
-                className="animate-scaleIn w-9 h-9 sm:w-10 sm:h-10 rounded-full flex items-center justify-center font-bold text-[0.6rem] sm:text-[0.65rem] text-white ring-2 ring-lime-800"
+                className="blur-reveal w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center font-bold text-[0.5rem] sm:text-[0.65rem] text-white ring-2 ring-lime-800"
                 style={{
                   background: p.bg,
                   zIndex: partners.length - i,
-                  animationDelay: `${0.5 + i * 0.1}s`,
                 }}
               >
                 {p.initials}
               </div>
             ))}
           </div>
-          <div className="flex flex-col">
-            <p className="text-xs text-white/70 font-medium leading-tight">
+          <div className="flex flex-col min-w-0">
+            <p className="text-[0.65rem] sm:text-xs text-white/70 font-medium leading-tight">
               Trusted by 50+ brands
             </p>
-            <p className="text-[0.68rem] text-white/40 leading-tight mt-0.5">
+            <p className="text-[0.6rem] sm:text-[0.68rem] text-white/40 leading-tight mt-0.5">
               Forward-thinking companies worldwide
             </p>
           </div>
@@ -153,10 +168,11 @@ const Hero = () => {
       </div>
 
       <div
-        className="rightContainer relative lg:absolute lg:right-0 lg:top-0 lg:bottom-0 w-full lg:w-[60%] rounded-t-[2.5rem] lg:rounded-t-none lg:rounded-l-[2.5rem] z-[1] flex flex-col items-center justify-center gap-8 overflow-hidden"
-        style={{ background: colors.secondaryColor }}
+        ref={rightRef}
+        style={{ opacity: 0, background: colors.secondaryColor }}
+        className="rightContainer lg:absolute lg:right-0 lg:top-0 lg:bottom-0 w-full lg:w-[60%] rounded-t-[2.5rem] lg:rounded-t-none lg:rounded-l-[2.5rem] z-[1] flex flex-col items-center justify-center gap-6 lg:gap-8 overflow-hidden px-5 lg:px-0"
       >
-        <div className="relative flex items-center justify-center w-[85%] h-[72vh] lg:h-[72vh]">
+        <div className="relative flex items-center justify-center w-[85%] h-[55vh] sm:h-[55vh] lg:h-[72vh] max-h-[480px] sm:max-h-[500px] lg:max-h-none">
           <div className="relative w-full h-full">
             {vmImages.map((img, i) => (
               <div

@@ -1,9 +1,11 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import gsap from "gsap";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { colors } from "../Colors/Colors";
+
 
 const { primaryColor, secondaryColor, lightPrimary, darkPrimary, darkText } = colors;
 
@@ -33,6 +35,23 @@ export default function Navbar() {
   const [hoveredLink, setHoveredLink] = useState(null);
   const indicatorRef = useRef(null);
   const linkRefs = useRef({});
+  const mobileNavRef = useRef(null);
+  const desktopNavRef = useRef(null);
+
+  useEffect(() => {
+    if (mobileNavRef.current) {
+      gsap.fromTo(mobileNavRef.current,
+        { opacity: 0, y: -20, scale: 0.9 },
+        { opacity: 1, y: 0, scale: 1, duration: 0.7, delay: 0.2, ease: "power3.out" }
+      );
+    }
+    if (desktopNavRef.current) {
+      gsap.fromTo(desktopNavRef.current,
+        { opacity: 0, y: -24, xPercent: -50 },
+        { opacity: 1, y: 0, xPercent: -50, duration: 0.8, delay: 0.15, ease: "power3.out" }
+      );
+    }
+  }, []);
 
   useEffect(() => {
     const sectionIds = navLinks.map((l) => l.section);
@@ -70,11 +89,94 @@ export default function Navbar() {
 
   return (
     <>
-      <nav className="fixed top-5 left-1/2 -translate-x-1/2 z-50 w-auto">
+      {/* Mobile */}
+      <nav ref={mobileNavRef} style={{ opacity: 0 }} className="fixed top-4 right-4 z-50 md:hidden">
         <div
-          className="flex items-center gap-2 px-4 py-3 rounded-full"
+          className="flex items-center gap-2 px-3 py-2 rounded-full"
           style={{
-            background: rgba(darkPrimary, 0.01),
+            background: rgba(secondaryColor, 0.08),
+            backdropFilter: "blur(24px)",
+            WebkitBackdropFilter: "blur(24px)",
+            border: `1px solid ${rgba(secondaryColor, 0.15)}`,
+            boxShadow: `0 8px 32px ${rgba(darkText, 0.35)}`,
+          }}
+        >
+          <div
+            className="w-7 h-7 rounded-full flex items-center justify-center font-bold text-xs shadow-lg shrink-0"
+            style={{
+              background: `linear-gradient(135deg, ${primaryColor}, ${lightPrimary})`,
+              color: secondaryColor,
+            }}
+          >
+            V
+          </div>
+          <button
+            className="flex items-center justify-center w-7 h-7"
+            style={{ color: secondaryColor }}
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          >
+            {mobileMenuOpen ? <X size={18} /> : <Menu size={18} />}
+          </button>
+        </div>
+
+        <AnimatePresence>
+          {mobileMenuOpen && (
+            <motion.div
+              initial={{ opacity: 0, y: -8, scale: 0.92 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: -8, scale: 0.92 }}
+              className="absolute top-full mt-2 right-0 w-56 rounded-2xl overflow-hidden flex flex-col"
+              style={{
+                background: rgba(secondaryColor, 0.97),
+                border: `1px solid ${rgba(primaryColor, 0.1)}`,
+                boxShadow: `0 20px 60px ${rgba(darkText, 0.18)}`,
+              }}
+            >
+              {navLinks.map((link) => (
+                <a
+                  key={link.name}
+                  href={link.href}
+                  className="px-5 py-3.5 text-sm font-medium border-b last:border-0 transition-colors"
+                  style={{
+                    color: activeSection === link.section ? darkPrimary : rgba(darkPrimary, 0.6),
+                    background: activeSection === link.section ? rgba(primaryColor, 0.08) : "transparent",
+                    borderColor: rgba(darkPrimary, 0.06),
+                  }}
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  {link.name}
+                  {activeSection === link.section && (
+                    <span
+                      className="ml-2 inline-block w-1.5 h-1.5 rounded-full"
+                      style={{ background: darkPrimary }}
+                    />
+                  )}
+                </a>
+              ))}
+              <div className="p-3">
+                <a
+                  href="#contact"
+                  className="block w-full py-2.5 rounded-full text-center text-sm font-semibold"
+                  style={{
+                    background: primaryColor,
+                    color: secondaryColor,
+                  }}
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  Get Quote
+                </a>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </nav>
+
+      {/* Desktop */}
+      <nav ref={desktopNavRef} style={{ opacity: 0 }} className="hidden md:block fixed top-5 left-1/2 z-50 w-[60%] ">
+        <div
+          className="flex items-center justify-around gap-2 px-4 py-3  rounded-full"
+          style={{
+            background: rgba(secondaryColor, 0.45),
             backdropFilter: "blur(24px)",
             WebkitBackdropFilter: "blur(24px)",
             border: `1px solid ${rgba(secondaryColor, 0.12)}`,
@@ -83,7 +185,7 @@ export default function Navbar() {
         >
           <a href="/" className="flex items-center gap-2 mr-3 shrink-0">
             <div
-              className="w-9 h-9 rounded-full  flex items-center justify-center font-bold text-base shadow-lg"
+              className="w-9 h-9 rounded-full flex items-center justify-center font-bold text-base shadow-lg"
               style={{
                 background: `linear-gradient(135deg, ${primaryColor}, ${lightPrimary})`,
                 color: secondaryColor,
@@ -93,9 +195,9 @@ export default function Navbar() {
             </div>
             <span
               className="text-base font-bold tracking-tight hidden sm:block"
-              style={{ color: secondaryColor }}
+              style={{ color: darkPrimary }}
             >
-              VendMac
+              Vendza
             </span>
           </a>
 
@@ -123,7 +225,7 @@ export default function Navbar() {
                   onMouseLeave={() => setHoveredLink(null)}
                   className="block px-4 py-2 text-sm font-medium rounded-full transition-colors duration-200"
                   style={{
-                    color: activeSection === link.section ? secondaryColor : rgba(darkText, 1),
+                    color: darkPrimary,
                   }}
                 >
                   {link.name}
@@ -141,72 +243,14 @@ export default function Navbar() {
             href="#contact"
             className="hidden md:block px-5 py-2 rounded-full text-sm font-semibold shrink-0 transition-all duration-300"
             style={{
-              background: `linear-gradient(135deg, ${darkPrimary}, ${primaryColor})`,
-              color: secondaryColor,
+              background: secondaryColor,
+              color: darkPrimary,
               boxShadow: `0 0 24px ${rgba(primaryColor, 0.24)}`,
             }}
           >
             Get Quote
           </a>
-
-          <button
-            className="md:hidden p-1 ml-1"
-            style={{ color: secondaryColor }}
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          >
-            {mobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
-          </button>
         </div>
-
-        <AnimatePresence>
-          {mobileMenuOpen && (
-            <motion.div
-              initial={{ opacity: 0, y: -10, scale: 0.95 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: -10, scale: 0.95 }}
-              className="absolute top-full mt-3 left-0 right-0 rounded-2xl overflow-hidden flex flex-col"
-              style={{
-                background: rgba(darkPrimary, 0.97),
-                border: `1px solid ${rgba(secondaryColor, 0.1)}`,
-                boxShadow: `0 20px 60px ${rgba(darkText, 0.6)}`,
-              }}
-            >
-              {navLinks.map((link) => (
-                <a
-                  key={link.name}
-                  href={link.href}
-                  className="px-6 py-4 text-base font-medium border-b last:border-0 transition-colors"
-                  style={{
-                    color: activeSection === link.section ? lightPrimary : rgba(secondaryColor, 0.7),
-                    background: activeSection === link.section ? rgba(primaryColor, 0.1) : "transparent",
-                    borderColor: rgba(secondaryColor, 0.05),
-                  }}
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  {link.name}
-                  {activeSection === link.section && (
-                    <span
-                      className="ml-2 inline-block w-1.5 h-1.5 rounded-full"
-                      style={{ background: lightPrimary }}
-                    />
-                  )}
-                </a>
-              ))}
-              <div className="p-4">
-                <a
-                  href="#contact"
-                  className="block w-full py-3 rounded-full text-center text-sm font-semibold"
-                  style={{
-                    background: `linear-gradient(135deg, ${darkPrimary}, ${primaryColor})`,
-                    color: secondaryColor,
-                  }}
-                >
-                  Get Quote
-                </a>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
       </nav>
     </>
   );
