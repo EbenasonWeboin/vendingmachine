@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import gsap from "gsap";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, px } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { colors } from "../Colors/Colors";
 
@@ -122,7 +122,7 @@ export default function Navbar() {
           </div>
           <button
             className="flex items-center justify-center w-6 h-6"
-            style={{ color: secondaryColor }}
+            style={{ color: darkPrimary }}
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           >
             {mobileMenuOpen ? <X size={16} /> : <Menu size={16} />}
@@ -137,8 +137,9 @@ export default function Navbar() {
               exit={{ opacity: 0, y: -8, scale: 0.92 }}
               className="absolute top-full mt-2 right-0 w-52 rounded-2xl overflow-hidden flex flex-col"
               style={{
-                background: rgba(secondaryColor, 0.97),
-                border: `1px solid ${rgba(primaryColor, 0.1)}`,
+                background: rgba(secondaryColor, 0.3),
+                backdropFilter:"blur(24px)",
+                border: `1px solid ${rgba(secondaryColor, 0.1)}`,
                 boxShadow: `0 20px 60px ${rgba(darkText, 0.18)}`,
               }}
             >
@@ -182,7 +183,7 @@ export default function Navbar() {
       </nav>
 
       {/* Desktop */}
-      <nav ref={desktopNavRef} style={{ opacity: 0 }} className="hidden md:block fixed top-4 left-1/2 z-50 w-[55%] max-w-3xl">
+      <nav ref={desktopNavRef} style={{ opacity: 0 }} className="hidden md:block fixed top-4 left-1/2 z-50 w-[55%] max-w-4xl">
         <div
           className="flex items-center justify-around gap-1.5 px-3 py-2 rounded-full"
           style={{
@@ -211,12 +212,9 @@ export default function Navbar() {
             </span>
           </a>
 
-          <div
-            className="w-px h-5 mr-1.5 hidden md:block"
-            style={{ background: rgba(darkText, 0.1) }}
-          />
+         
 
-          <ul ref={navListRef} className="hidden md:flex items-center gap-0.5 relative">
+          <ul ref={navListRef} className="hidden md:flex px-24 items-center gap-0.5 relative">
             <span
               ref={indicatorRef}
               className="absolute top-0 h-full rounded-full transition-all duration-300 ease-out pointer-events-none"
@@ -244,11 +242,7 @@ export default function Navbar() {
             ))}
           </ul>
 
-          <div
-            className="w-px h-5 mx-1.5 hidden md:block"
-            style={{ background: rgba(secondaryColor, 0.1) }}
-          />
-
+       
           <a
             href="#contact"
             className="hidden md:block px-4 py-1.5 rounded-full text-xs font-semibold shrink-0 transition-all duration-300"

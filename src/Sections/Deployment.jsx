@@ -33,10 +33,31 @@ const steps = [
   },
 ];
 
+const CardContent = ({ s }) => (
+  <>
+    <h3 className="text-base sm:text-lg font-bold mb-2 transition-colors duration-300 group-hover:text-white"
+        style={{ color: colors.secondaryColor }}>
+      {s.title}
+    </h3>
+    <p className="text-xs leading-relaxed transition-colors duration-300"
+       style={{ color: `${colors.secondaryColor}AA` }}>
+      {s.desc}
+    </p>
+    <span
+      className="inline-block mt-2 text-[0.55rem] font-semibold tracking-wider uppercase px-2 py-0.5 rounded-full transition-all duration-300 group-hover:bg-white group-hover:text-primaryColor"
+      style={{
+        background: `${colors.secondaryColor}12`,
+        color: colors.secondaryColor,
+      }}
+    >
+      Step {s.step}
+    </span>
+  </>
+);
+
 const Deployment = () => {
   const sectionRef = useRef(null);
   const lineRef = useRef(null);
-  const cardRefs = useRef([]);
 
   useEffect(() => {
     const el = sectionRef.current;
@@ -60,11 +81,10 @@ const Deployment = () => {
       );
     }
 
-    cardRefs.current.forEach((card, i) => {
-      if (!card) return;
-      const isLeft = i % 2 === 0;
+    const cardElements = el.querySelectorAll(".deployment-card");
+    cardElements.forEach((card, i) => {
       gsap.fromTo(card,
-        { opacity: 0, filter: "blur(10px)", x: isLeft ? -60 : 60 },
+        { opacity: 0, filter: "blur(10px)", x: 60 },
         {
           opacity: 1,
           filter: "blur(0px)",
@@ -130,10 +150,11 @@ const Deployment = () => {
           </p>
         </div>
 
-        <div className="relative">
+        <div className="relative pl-[36px] sm:pl-[44px] lg:pl-0">
+          {/* Timeline line (visible at all breakpoints) */}
           <div
             ref={lineRef}
-            className="hidden lg:block absolute left-1/2 -translate-x-px top-0 w-0.5 h-full"
+            className="absolute left-0 top-0 w-[3px] sm:w-[3px] lg:w-0.5 h-full rounded-full lg:left-1/2 lg:-translate-x-px"
             style={{
               background: `linear-gradient(180deg, ${colors.lightPrimary}, ${colors.primaryColor})`,
             }}
@@ -143,116 +164,60 @@ const Deployment = () => {
             const isLeft = i % 2 === 0;
             const Icon = s.icon;
 
+            const cardContent = (
+              <div
+                className="deployment-card w-full rounded-2xl p-4 sm:p-5 transition-all duration-500 group-hover:-translate-y-1 group-hover:scale-[1.02]"
+                style={{
+                  background: `${colors.secondaryColor}0C`,
+                  border: `1px solid ${colors.secondaryColor}15`,
+                  transition: "all 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.background = `${colors.secondaryColor}18`;
+                  e.currentTarget.style.borderColor = `${colors.lightPrimary}50`;
+                  e.currentTarget.style.boxShadow = `0 8px 40px ${colors.darkText}30`;
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.background = `${colors.secondaryColor}0C`;
+                  e.currentTarget.style.borderColor = `${colors.secondaryColor}15`;
+                  e.currentTarget.style.boxShadow = "none";
+                }}
+              >
+                <CardContent s={s} />
+              </div>
+            );
+
             return (
-                <div
-                  key={i}
-                  className="group relative flex items-start py-3 lg:py-5"
-                >
+              <div key={i} className="group relative flex items-start py-3 md:py-4 lg:py-6">
+                {/* Icon on the timeline line */}
+                <div className="absolute -left-[28px] sm:-left-[34px] lg:left-1/2 lg:-translate-x-1/2 z-10">
                   <div
-                    className={`hidden lg:flex w-1/2 items-center ${isLeft ? "justify-end pr-8" : "justify-start pl-8 order-2"}`}
+                    className="w-8 h-8 sm:w-10 sm:h-10 lg:w-10 lg:h-10 rounded-full flex items-center justify-center shadow-lg transition-all duration-500 group-hover:scale-125 group-hover:shadow-[0_0_30px_rgba(163,177,138,0.5)]"
+                    style={{
+                      background: `linear-gradient(135deg, ${colors.primaryColor}, ${colors.lightPrimary})`,
+                      color: colors.secondaryColor,
+                    }}
                   >
-                    <div
-                      ref={(el) => { cardRefs.current[i] = el; }}
-                      className="w-full max-w-md rounded-2xl p-4 sm:p-5 transition-all duration-500 group-hover:-translate-y-1 group-hover:scale-[1.02]"
-                      style={{
-                        background: `${colors.secondaryColor}0C`,
-                        border: `1px solid ${colors.secondaryColor}15`,
-                        textAlign: isLeft ? "right" : "left",
-                        transition: "all 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
-                      }}
-                      onMouseEnter={(e) => {
-                        e.currentTarget.style.background = `${colors.secondaryColor}18`;
-                        e.currentTarget.style.borderColor = `${colors.lightPrimary}50`;
-                        e.currentTarget.style.boxShadow = `0 8px 40px ${colors.darkText}30`;
-                      }}
-                      onMouseLeave={(e) => {
-                        e.currentTarget.style.background = `${colors.secondaryColor}0C`;
-                        e.currentTarget.style.borderColor = `${colors.secondaryColor}15`;
-                        e.currentTarget.style.boxShadow = "none";
-                      }}
-                    >
-                      <h3 className="text-base sm:text-lg font-bold mb-2 transition-colors duration-300 group-hover:text-white"
-                          style={{ color: colors.secondaryColor }}>
-                        {s.title}
-                      </h3>
-                      <p className="text-xs leading-relaxed transition-colors duration-300"
-                         style={{ color: `${colors.secondaryColor}AA` }}>
-                        {s.desc}
-                      </p>
-                      <span
-                        className="inline-block mt-2 text-[0.55rem] font-semibold tracking-wider uppercase px-2 py-0.5 rounded-full transition-all duration-300 group-hover:bg-white group-hover:text-primaryColor"
-                        style={{
-                          background: `${colors.secondaryColor}12`,
-                          color: colors.secondaryColor,
-                        }}
-                      >
-                        Step {s.step}
-                      </span>
-                    </div>
-                  </div>
-
-                  <div className="hidden lg:flex absolute left-1/2 -translate-x-1/2 z-10">
-                    <div
-                      className="w-10 h-10 rounded-full flex items-center justify-center shadow-lg transition-all duration-500 group-hover:scale-125 group-hover:shadow-[0_0_30px_rgba(163,177,138,0.5)]"
-                      style={{
-                        background: `linear-gradient(135deg, ${colors.primaryColor}, ${colors.lightPrimary})`,
-                        color: colors.secondaryColor,
-                      }}
-                    >
-                      <Icon size={16} />
-                    </div>
-                  </div>
-
-                  <div className="hidden lg:block w-1/2" />
-
-                  <div className="lg:hidden flex items-start gap-3 w-full">
-                    <div
-                      className="relative z-10 w-10 h-10 rounded-full flex items-center justify-center shrink-0 shadow-lg transition-all duration-500 group-hover:scale-125 group-hover:shadow-[0_0_30px_rgba(163,177,138,0.5)]"
-                      style={{
-                        background: `linear-gradient(135deg, ${colors.primaryColor}, ${colors.lightPrimary})`,
-                        color: colors.secondaryColor,
-                      }}
-                    >
-                      <Icon size={16} />
-                    </div>
-                    <div
-                      className="flex-1 rounded-2xl p-4 transition-all duration-500"
-                      style={{
-                        background: `${colors.secondaryColor}0C`,
-                        border: `1px solid ${colors.secondaryColor}15`,
-                        transition: "all 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
-                      }}
-                      onMouseEnter={(e) => {
-                        e.currentTarget.style.background = `${colors.secondaryColor}18`;
-                        e.currentTarget.style.borderColor = `${colors.lightPrimary}50`;
-                        e.currentTarget.style.boxShadow = `0 8px 40px ${colors.darkText}30`;
-                      }}
-                      onMouseLeave={(e) => {
-                        e.currentTarget.style.background = `${colors.secondaryColor}0C`;
-                        e.currentTarget.style.borderColor = `${colors.secondaryColor}15`;
-                        e.currentTarget.style.boxShadow = "none";
-                      }}
-                    >
-                      <h3 className="text-sm font-bold mb-1.5 transition-colors duration-300 group-hover:text-white"
-                          style={{ color: colors.secondaryColor }}>
-                        {s.title}
-                      </h3>
-                      <p className="text-xs leading-relaxed"
-                         style={{ color: `${colors.secondaryColor}AA` }}>
-                        {s.desc}
-                      </p>
-                      <span
-                        className="inline-block mt-1.5 text-[0.5rem] font-semibold tracking-wider uppercase px-1.5 py-0.5 rounded-full transition-all duration-300 group-hover:bg-white group-hover:text-primaryColor"
-                        style={{
-                          background: `${colors.secondaryColor}12`,
-                          color: colors.secondaryColor,
-                        }}
-                      >
-                        Step {s.step}
-                      </span>
-                    </div>
+                    <Icon size={14} className="sm:w-4 sm:h-4" />
                   </div>
                 </div>
+
+                {/* Desktop: alternating left/right */}
+                <div className="hidden lg:flex w-full items-center">
+                  <div className="w-1/2 flex justify-end pr-14">
+                    {isLeft && cardContent}
+                  </div>
+                  <div className="w-[40px] shrink-0" />
+                  <div className="w-1/2 flex justify-start pl-14">
+                    {!isLeft && cardContent}
+                  </div>
+                </div>
+
+                {/* Mobile/Tablet: right-aligned card */}
+                <div className="lg:hidden w-full max-w-2xl">
+                  {cardContent}
+                </div>
+              </div>
             );
           })}
         </div>

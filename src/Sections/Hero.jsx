@@ -27,6 +27,7 @@ const Hero = () => {
   const sectionRef = useBlurReveal();
   const rightRef = useRef(null);
   const [activeIndex, setActiveIndex] = useState(0);
+  const timerRef = useRef(null);
 
   useEffect(() => {
     if (rightRef.current) {
@@ -42,16 +43,24 @@ const Hero = () => {
     }
   }, []);
 
-  const next = useCallback(() => {
-    setActiveIndex((prev) => (prev + 1) % vmImages.length);
+  const startTimer = useCallback(() => {
+    if (timerRef.current) clearInterval(timerRef.current);
+    timerRef.current = setInterval(() => {
+      setActiveIndex((prev) => (prev + 1) % vmImages.length);
+    }, 3000);
   }, []);
 
   useEffect(() => {
-    const timer = setInterval(next, 3000);
-    return () => clearInterval(timer);
-  }, [next]);
+    startTimer();
+    return () => {
+      if (timerRef.current) clearInterval(timerRef.current);
+    };
+  }, [startTimer]);
 
-  const goTo = (i) => setActiveIndex(i);
+  const goTo = useCallback((i) => {
+    setActiveIndex(i);
+    startTimer();
+  }, [startTimer]);
 
   const [slideOffset, setSlideOffset] = useState(120);
 
@@ -106,9 +115,9 @@ const Hero = () => {
           Cashless • Contactless • Fully Automatic
         </p>
         <h1
-          className="blur-reveal text-[1.25rem] sm:text-4xl lg:text-6xl max-w-xl font-bold text-white/80 leading-[1.08]"
+          className="blur-reveal text-[2.25rem] sm:text-4xl lg:text-6xl max-w-xl font-bold text-white/80 leading-[1.08]"
         >
-          <span className="text-6xl" style={{ color: colors.secondaryColor }}>Smart Vending</span>{" "}
+          <span style={{ color: colors.secondaryColor }}>Smart Vending</span><br/>
           Machines For Modern Spaces.
         </h1>
 
@@ -120,8 +129,9 @@ const Hero = () => {
           modern technology with reliable service to deliver a seamless
           experience.
         </p>
-        <button
+        <a
           className="blur-reveal group inline-flex items-center gap-1.5 bg-[#F8F6E8] text-[#2d3a1a] font-semibold text-[0.6rem] sm:text-xs py-2 sm:py-2.5 px-5 sm:px-6 rounded-full border-none cursor-pointer transition-all duration-300 w-fit hover:bg-white hover:-translate-y-0.5 hover:shadow-lg"
+          href="#machines"
         >
           Explore Machines
           <svg
@@ -138,7 +148,7 @@ const Hero = () => {
             <line x1="7" y1="17" x2="17" y2="7" />
             <polyline points="7 7 17 7 17 17" />
           </svg>
-        </button>
+        </a>
 
         <div
           className="blur-reveal flex items-center gap-2 sm:gap-3 mt-6 lg:mt-5 flex-wrap"
@@ -171,7 +181,7 @@ const Hero = () => {
       <div
         ref={rightRef}
         style={{ opacity: 0, background: colors.secondaryColor }}
-        className="rightContainer lg:absolute lg:right-0 lg:top-0 lg:bottom-0 w-full lg:w-[60%] rounded-t-[2rem] lg:rounded-t-none lg:rounded-l-[2rem] z-[1] flex flex-col items-center justify-center gap-5 lg:gap-6 overflow-hidden px-5 lg:px-0"
+        className="rightContainer lg:absolute lg:right-0 lg:top-0 lg:bottom-0 w-full lg:w-[60%] rounded-t-[2rem] lg:rounded-t-none lg:rounded-l-[2rem] lg:z-30 z-[1] flex flex-col items-center justify-center gap-5 lg:gap-6 overflow-hidden px-5 lg:px-0"
       >
         <div className="relative flex items-center justify-center w-[80%] h-[50vh] sm:h-[50vh] lg:h-[65vh] max-h-[400px] sm:max-h-[420px] lg:max-h-none">
           <div className="relative w-full h-full">
