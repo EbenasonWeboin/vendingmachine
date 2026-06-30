@@ -39,28 +39,28 @@ const Machines = () => {
     <section
       ref={sectionRef}
       id="machines"
-      className="relative overflow-hidden font-sans py-20 sm:py-28"
+      className="relative overflow-hidden font-sans py-16 sm:py-20"
       style={{ background: colors.secondaryColor }}
     >
-      <div className="relative z-10 max-w-7xl mx-auto px-6 sm:px-10">
-        <div className="text-center max-w-2xl mx-auto mb-16">
-          <p className="blur-reveal text-xs font-medium tracking-[0.2em] uppercase mb-4"
+      <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-8">
+        <div className="text-center max-w-2xl mx-auto mb-12">
+          <p className="blur-reveal text-[0.65rem] font-medium tracking-[0.2em] uppercase mb-3"
              style={{ color: colors.primaryColor }}>
             Our Fleet
           </p>
-          <h2 className="blur-reveal text-3xl sm:text-4xl lg:text-5xl font-bold leading-[1.1]"
+          <h2 className="blur-reveal text-2xl sm:text-3xl lg:text-4xl font-bold leading-[1.1]"
               style={{ color: colors.darkText }}>
             Machines Built For{" "}
             <span style={{ color: colors.primaryColor }}>Every Space</span>
           </h2>
-          <p className="blur-reveal mt-4 text-sm sm:text-base leading-relaxed"
+          <p className="blur-reveal mt-3 text-xs sm:text-sm leading-relaxed"
                style={{ color: colors.lightPrimary }}>
             From compact office units to high-capacity public installations
             — we have a vending solution that fits your environment perfectly.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-4 lg:gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-3 lg:gap-4">
           {machineCategories.map((cat, i) => (
             <div
               key={i}
@@ -76,9 +76,9 @@ const Machines = () => {
                 <img
                   src={cat.image}
                   alt={cat.title}
-                  className="h-[70%] sm:h-[80%] w-auto object-contain drop-shadow-[0_12px_40px_rgba(0,0,0,0.2)] transition-transform duration-500 group-hover:scale-105"
+                  className="h-[65%] sm:h-[75%] w-auto object-contain drop-shadow-[0_10px_30px_rgba(0,0,0,0.2)] transition-transform duration-500 group-hover:scale-105"
                 />
-                <div className="absolute top-2 sm:top-3 right-2 sm:right-3 px-2 sm:px-3 py-0.5 sm:py-1 rounded-full text-[0.55rem] sm:text-[0.6rem] font-semibold tracking-wide uppercase"
+                <div className="absolute top-1.5 sm:top-2 right-1.5 sm:right-2 px-1.5 sm:px-2 py-0.5 rounded-full text-[0.45rem] sm:text-[0.5rem] font-semibold tracking-wide uppercase"
                      style={{
                        background: colors.primaryColor,
                        color: colors.secondaryColor,
@@ -87,12 +87,12 @@ const Machines = () => {
                 </div>
               </div>
 
-              <div className="flex flex-col gap-2 sm:gap-3 p-4 sm:p-5 flex-1">
-                <h3 className="text-base sm:text-lg font-bold leading-snug"
+              <div className="flex flex-col gap-1.5 sm:gap-2 p-3 sm:p-4 flex-1">
+                <h3 className="text-sm sm:text-base font-bold leading-snug"
                     style={{ color: colors.darkText }}>
                   {cat.title}
                 </h3>
-                <p className="text-[0.7rem] sm:text-xs leading-relaxed flex-1"
+                <p className="text-[0.6rem] sm:text-[0.7rem] leading-relaxed flex-1"
                    style={{ color: colors.lightPrimary }}>
                   {cat.desc}
                 </p>
@@ -100,7 +100,7 @@ const Machines = () => {
                   {cat.features.map((feat, j) => (
                     <span
                       key={j}
-                      className="text-[0.6rem] sm:text-[0.65rem] font-medium px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full"
+                      className="text-[0.5rem] sm:text-[0.55rem] font-medium px-1.5 sm:px-2 py-0.5 rounded-full"
                       style={{
                         background: `${colors.primaryColor}12`,
                         color: colors.primaryColor,
@@ -115,7 +115,7 @@ const Machines = () => {
           ))}
         </div>
 
-        <div className="blur-reveal mt-16 grid grid-cols-2 sm:grid-cols-4 gap-6 sm:gap-8 max-w-3xl mx-auto">
+        <div className="blur-reveal mt-12 grid grid-cols-2 sm:grid-cols-4 gap-5 sm:gap-6 max-w-2xl mx-auto">
           {[
             { icon: Cpu, label: "Smart Sensors", desc: "Real-time inventory" },
             { icon: Wifi, label: "Always Connected", desc: "Remote monitoring" },
@@ -125,14 +125,14 @@ const Machines = () => {
             const Icon = item.icon;
             return (
               <div key={i} className="text-center">
-                <div className="w-11 h-11 rounded-xl flex items-center justify-center mx-auto mb-3"
+                <div className="w-10 h-10 rounded-xl flex items-center justify-center mx-auto mb-2"
                      style={{ background: `${colors.primaryColor}10` }}>
-                  <Icon size={20} style={{ color: colors.primaryColor }} />
+                  <Icon size={16} style={{ color: colors.primaryColor }} />
                 </div>
-                <p className="text-sm font-semibold" style={{ color: colors.darkText }}>
+                <p className="text-xs font-semibold" style={{ color: colors.darkText }}>
                   {item.label}
                 </p>
-                <p className="text-[0.7rem] mt-0.5" style={{ color: colors.lightPrimary }}>
+                <p className="text-[0.6rem] mt-0.5" style={{ color: colors.lightPrimary }}>
                   {item.desc}
                 </p>
               </div>
@@ -140,16 +140,16 @@ const Machines = () => {
           })}
         </div>
 
-        <div className="blur-reveal mt-16 text-center">
-          <p className="text-xs font-medium tracking-[0.15em] uppercase mb-4"
+        <div className="blur-reveal mt-12 text-center">
+          <p className="text-[0.65rem] font-medium tracking-[0.15em] uppercase mb-3"
              style={{ color: colors.lightPrimary }}>
             Trusted across industries
           </p>
-          <div className="flex flex-wrap justify-center gap-x-10 gap-y-3">
+          <div className="flex flex-wrap justify-center gap-x-8 gap-y-2.5">
             {["Offices", "Schools", "Hospitals", "Malls", "Gyms", "Hotels"].map((place) => (
               <span
                 key={place}
-                className="text-sm font-semibold"
+                className="text-xs font-semibold"
                 style={{ color: colors.darkText }}
               >
                 {place}
@@ -160,7 +160,7 @@ const Machines = () => {
       </div>
 
       <div
-        className="absolute -bottom-32 -right-32 w-80 h-80 rounded-full opacity-[0.04] pointer-events-none"
+        className="absolute -bottom-24 -right-24 w-64 h-64 rounded-full opacity-[0.04] pointer-events-none"
         style={{ background: colors.primaryColor }}
       />
     </section>

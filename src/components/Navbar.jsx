@@ -37,6 +37,9 @@ export default function Navbar() {
   const linkRefs = useRef({});
   const mobileNavRef = useRef(null);
   const desktopNavRef = useRef(null);
+  const navListRef = useRef(null);
+
+  const prevIntersecting = useRef({});
 
   useEffect(() => {
     if (mobileNavRef.current) {
@@ -62,7 +65,12 @@ export default function Navbar() {
       if (!el) return;
       const obs = new IntersectionObserver(
         ([entry]) => {
-          if (entry.isIntersecting) setActiveSection(id);
+          const wasIntersecting = prevIntersecting.current[id] ?? false;
+          prevIntersecting.current[id] = entry.isIntersecting;
+
+          if (entry.isIntersecting && !wasIntersecting) {
+            setActiveSection(id);
+          }
         },
         { threshold: 0.3, rootMargin: "-80px 0px -50% 0px" }
       );
@@ -77,22 +85,24 @@ export default function Navbar() {
     const target = hoveredLink ?? activeSection;
     const el = linkRefs.current[target];
     const indicator = indicatorRef.current;
-    if (!el || !indicator) return;
+    const navList = navListRef.current;
+    if (!el || !indicator || !navList) return;
 
-    const rect = el.getBoundingClientRect();
-    const parentRect = el.parentElement?.parentElement?.getBoundingClientRect();
-    if (!parentRect) return;
+    const linkRect = el.getBoundingClientRect();
+    const listRect = navList.getBoundingClientRect();
 
-    indicator.style.width = `${rect.width + 24}px`;
-    indicator.style.left = `${rect.left - parentRect.left - 12}px`;
+    indicator.style.width = `${linkRect.width + 20}px`;
+    indicator.style.left = `${linkRect.left - listRect.left - 10}px`;
   }, [activeSection, hoveredLink]);
+
+  const[hover,setHover]=useState(false)
 
   return (
     <>
       {/* Mobile */}
-      <nav ref={mobileNavRef} style={{ opacity: 0 }} className="fixed top-4 right-4 z-50 md:hidden">
+      <nav ref={mobileNavRef} style={{ opacity: 0 }} className="fixed top-3 right-3 z-50 md:hidden">
         <div
-          className="flex items-center gap-2 px-3 py-2 rounded-full"
+          className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-full"
           style={{
             background: rgba(secondaryColor, 0.08),
             backdropFilter: "blur(24px)",
@@ -102,7 +112,7 @@ export default function Navbar() {
           }}
         >
           <div
-            className="w-7 h-7 rounded-full flex items-center justify-center font-bold text-xs shadow-lg shrink-0"
+            className="w-6 h-6 rounded-full flex items-center justify-center font-bold text-[0.6rem] shadow-lg shrink-0"
             style={{
               background: `linear-gradient(135deg, ${primaryColor}, ${lightPrimary})`,
               color: secondaryColor,
@@ -111,11 +121,11 @@ export default function Navbar() {
             V
           </div>
           <button
-            className="flex items-center justify-center w-7 h-7"
+            className="flex items-center justify-center w-6 h-6"
             style={{ color: secondaryColor }}
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           >
-            {mobileMenuOpen ? <X size={18} /> : <Menu size={18} />}
+            {mobileMenuOpen ? <X size={16} /> : <Menu size={16} />}
           </button>
         </div>
 
@@ -125,7 +135,7 @@ export default function Navbar() {
               initial={{ opacity: 0, y: -8, scale: 0.92 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -8, scale: 0.92 }}
-              className="absolute top-full mt-2 right-0 w-56 rounded-2xl overflow-hidden flex flex-col"
+              className="absolute top-full mt-2 right-0 w-52 rounded-2xl overflow-hidden flex flex-col"
               style={{
                 background: rgba(secondaryColor, 0.97),
                 border: `1px solid ${rgba(primaryColor, 0.1)}`,
@@ -136,7 +146,7 @@ export default function Navbar() {
                 <a
                   key={link.name}
                   href={link.href}
-                  className="px-5 py-3.5 text-sm font-medium border-b last:border-0 transition-colors"
+                  className="px-4 py-3 text-xs font-medium border-b last:border-0 transition-colors"
                   style={{
                     color: activeSection === link.section ? darkPrimary : rgba(darkPrimary, 0.6),
                     background: activeSection === link.section ? rgba(primaryColor, 0.08) : "transparent",
@@ -153,10 +163,10 @@ export default function Navbar() {
                   )}
                 </a>
               ))}
-              <div className="p-3">
+              <div className="p-2.5">
                 <a
                   href="#contact"
-                  className="block w-full py-2.5 rounded-full text-center text-sm font-semibold"
+                  className="block w-full py-2 rounded-full text-center text-xs font-semibold"
                   style={{
                     background: primaryColor,
                     color: secondaryColor,
@@ -172,9 +182,9 @@ export default function Navbar() {
       </nav>
 
       {/* Desktop */}
-      <nav ref={desktopNavRef} style={{ opacity: 0 }} className="hidden md:block fixed top-5 left-1/2 z-50 w-[60%] ">
+      <nav ref={desktopNavRef} style={{ opacity: 0 }} className="hidden md:block fixed top-4 left-1/2 z-50 w-[55%] max-w-3xl">
         <div
-          className="flex items-center justify-around gap-2 px-4 py-3  rounded-full"
+          className="flex items-center justify-around gap-1.5 px-3 py-2 rounded-full"
           style={{
             background: rgba(secondaryColor, 0.45),
             backdropFilter: "blur(24px)",
@@ -183,9 +193,9 @@ export default function Navbar() {
             boxShadow: `0 18px 70px ${rgba(darkText, 0.45)}, 0 0 0 1px ${rgba(primaryColor, 0.08)}, inset 0 1px 0 ${rgba(secondaryColor, 0.08)}`,
           }}
         >
-          <a href="/" className="flex items-center gap-2 mr-3 shrink-0">
+          <a href="/" className="flex items-center gap-1.5 mr-2 shrink-0">
             <div
-              className="w-9 h-9 rounded-full flex items-center justify-center font-bold text-base shadow-lg"
+              className="w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm shadow-lg"
               style={{
                 background: `linear-gradient(135deg, ${primaryColor}, ${lightPrimary})`,
                 color: secondaryColor,
@@ -194,7 +204,7 @@ export default function Navbar() {
               V
             </div>
             <span
-              className="text-base font-bold tracking-tight hidden sm:block"
+              className="text-sm font-bold tracking-tight hidden sm:block"
               style={{ color: darkPrimary }}
             >
               Vendza
@@ -202,11 +212,11 @@ export default function Navbar() {
           </a>
 
           <div
-            className="w-px h-6 mr-2 hidden md:block"
+            className="w-px h-5 mr-1.5 hidden md:block"
             style={{ background: rgba(darkText, 0.1) }}
           />
 
-          <ul className="hidden md:flex items-center gap-1 relative">
+          <ul ref={navListRef} className="hidden md:flex items-center gap-0.5 relative">
             <span
               ref={indicatorRef}
               className="absolute top-0 h-full rounded-full transition-all duration-300 ease-out pointer-events-none"
@@ -223,7 +233,7 @@ export default function Navbar() {
                   href={link.href}
                   onMouseEnter={() => setHoveredLink(link.section)}
                   onMouseLeave={() => setHoveredLink(null)}
-                  className="block px-4 py-2 text-sm font-medium rounded-full transition-colors duration-200"
+                  className="block px-3 py-1.5 text-xs font-medium rounded-full transition-colors duration-200"
                   style={{
                     color: darkPrimary,
                   }}
@@ -235,17 +245,19 @@ export default function Navbar() {
           </ul>
 
           <div
-            className="w-px h-6 mx-2 hidden md:block"
+            className="w-px h-5 mx-1.5 hidden md:block"
             style={{ background: rgba(secondaryColor, 0.1) }}
           />
 
           <a
             href="#contact"
-            className="hidden md:block px-5 py-2 rounded-full text-sm font-semibold shrink-0 transition-all duration-300"
+            className="hidden md:block px-4 py-1.5 rounded-full text-xs font-semibold shrink-0 transition-all duration-300"
+            onMouseEnter={() => {setHover(true)}}
+            onMouseLeave={()=> {setHover(false)}}
             style={{
-              background: secondaryColor,
-              color: darkPrimary,
-              boxShadow: `0 0 24px ${rgba(primaryColor, 0.24)}`,
+              background: hover ? primaryColor :secondaryColor,
+              color: hover ? secondaryColor: darkPrimary,
+              boxShadow:hover ? `0 0 24px ${rgba(darkText, 0.24)}` :  `0 0 24px ${rgba(primaryColor, 0.24)}`,
             }}
           >
             Get Quote

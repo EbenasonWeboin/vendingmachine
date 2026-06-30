@@ -43,14 +43,14 @@ const solutions = [
   },
 ];
 
-const gap = 20;
+const gap = 16;
 
 const Solutions = () => {
   const sectionRef = useBlurReveal(".blur-reveal-header");
   const scrollRef = useRef(null);
   const containerRef = useRef(null);
   const [activeIdx, setActiveIdx] = useState(0);
-  const [cardWidth, setCardWidth] = useState(380);
+  const [cardWidth, setCardWidth] = useState(300);
   const maxIdx = solutions.length - 1;
 
   useEffect(() => {
@@ -58,11 +58,11 @@ const Solutions = () => {
       if (containerRef.current) {
         const containerW = containerRef.current.offsetWidth;
         if (containerW < 640) {
-          setCardWidth(Math.min(containerW - 40, 320));
+          setCardWidth(Math.min(containerW - 40, 260));
         } else if (containerW < 1024) {
-          setCardWidth(Math.min(containerW * 0.6, 380));
+          setCardWidth(Math.min(containerW * 0.55, 300));
         } else {
-          setCardWidth(380);
+          setCardWidth(300);
         }
       }
     };
@@ -125,21 +125,21 @@ const Solutions = () => {
     <section
       ref={sectionRef}
       id="solutions"
-      className="relative overflow-hidden font-sans py-20 sm:py-28"
+      className="relative overflow-hidden font-sans py-16 sm:py-20"
       style={{ background: colors.secondaryColor }}
     >
-      <div className="relative z-10 max-w-7xl mx-auto px-6 sm:px-10">
-        <div className="text-center max-w-2xl mx-auto mb-12">
-          <p className="blur-reveal-header text-xs font-medium tracking-[0.2em] uppercase mb-4"
+      <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-8">
+        <div className="text-center max-w-2xl mx-auto mb-10">
+          <p className="blur-reveal-header text-[0.65rem] font-medium tracking-[0.2em] uppercase mb-3"
              style={{ color: colors.lightPrimary }}>
             Tailored For You
           </p>
-          <h2 className="blur-reveal-header text-3xl sm:text-4xl lg:text-5xl font-bold leading-[1.1]"
+          <h2 className="blur-reveal-header text-2xl sm:text-3xl lg:text-4xl font-bold leading-[1.1]"
               style={{ color: colors.darkText }}>
             Solutions For{" "}
             <span style={{ color: colors.primaryColor }}>Every Industry</span>
           </h2>
-          <p className="blur-reveal-header mt-4 text-sm sm:text-base leading-relaxed"
+          <p className="blur-reveal-header mt-3 text-xs sm:text-sm leading-relaxed"
                style={{ color: colors.lightPrimary }}>
             We tailor every installation to the unique needs of your space —
             from compact office setups to high-capacity public deployments.
@@ -149,7 +149,7 @@ const Solutions = () => {
         <div className="relative" ref={containerRef}>
           <button
             onClick={prev}
-            className="absolute left-0 sm:-left-1 top-1/2 -translate-y-1/2 z-20 w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center transition-all duration-200 hover:scale-110"
+            className="absolute left-0 sm:-left-1 top-1/2 -translate-y-1/2 z-20 w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center transition-all duration-200 hover:scale-110"
             style={{
               background: colors.secondaryColor,
               border: `1px solid ${colors.primaryColor}20`,
@@ -157,7 +157,7 @@ const Solutions = () => {
               color: colors.primaryColor,
             }}
           >
-            <ChevronLeft size={16} />
+            <ChevronLeft size={14} />
           </button>
 
           <div
@@ -174,7 +174,7 @@ const Solutions = () => {
               return (
                 <div
                   key={i}
-                  className="shrink-0 rounded-2xl p-5 sm:p-6 transition-all duration-500"
+                  className="shrink-0 rounded-2xl p-4 sm:p-5 transition-all duration-500"
                   style={{
                     width: cardWidth,
                     background: colors.secondaryColor,
@@ -186,19 +186,19 @@ const Solutions = () => {
                   }}
                 >
                   <div
-                    className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl flex items-center justify-center mb-3 sm:mb-4"
+                    className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl flex items-center justify-center mb-2 sm:mb-3"
                     style={{
                       background: `${colors.primaryColor}12`,
                       color: colors.primaryColor,
                     }}
                   >
-                    <Icon size={20} />
+                    <Icon size={16} />
                   </div>
-                  <h3 className="text-base sm:text-lg font-bold mb-2 sm:mb-3"
+                  <h3 className="text-sm sm:text-base font-bold mb-1.5 sm:mb-2"
                       style={{ color: colors.darkText }}>
                     {sol.title}
                   </h3>
-                  <p className="text-xs sm:text-sm leading-relaxed mb-3 sm:mb-4"
+                  <p className="text-[0.6rem] sm:text-xs leading-relaxed mb-2 sm:mb-3"
                      style={{ color: colors.lightPrimary }}>
                     {sol.desc}
                   </p>
@@ -206,7 +206,7 @@ const Solutions = () => {
                     {sol.highlights.map((h, j) => (
                       <span
                         key={j}
-                        className="text-[0.55rem] sm:text-[0.6rem] font-semibold tracking-wide uppercase px-2 sm:px-2.5 py-1 rounded-full"
+                        className="text-[0.45rem] sm:text-[0.5rem] font-semibold tracking-wide uppercase px-1.5 sm:px-2 py-0.5 rounded-full"
                         style={{
                           background: `${colors.primaryColor}10`,
                           color: colors.primaryColor,
@@ -223,7 +223,7 @@ const Solutions = () => {
 
           <button
             onClick={next}
-            className="absolute right-0 sm:-right-1 top-1/2 -translate-y-1/2 z-20 w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center transition-all duration-200 hover:scale-110"
+            className="absolute right-0 sm:-right-1 top-1/2 -translate-y-1/2 z-20 w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center transition-all duration-200 hover:scale-110"
             style={{
               background: colors.secondaryColor,
               border: `1px solid ${colors.primaryColor}20`,
@@ -231,19 +231,19 @@ const Solutions = () => {
               color: colors.primaryColor,
             }}
           >
-            <ChevronRight size={16} />
+            <ChevronRight size={14} />
           </button>
         </div>
 
-        <div className="flex items-center justify-center gap-2.5 mt-8">
+        <div className="flex items-center justify-center gap-2 mt-6">
           {solutions.map((_, i) => (
             <button
               key={i}
               onClick={() => scrollTo(i)}
               className="rounded-full transition-all duration-300"
               style={{
-                width: i === activeIdx ? 28 : 8,
-                height: 8,
+                width: i === activeIdx ? 22 : 6,
+                height: 6,
                 background: i === activeIdx ? colors.primaryColor : colors.lightPrimary,
                 opacity: i === activeIdx ? 1 : 0.4,
                 border: "none",
@@ -255,7 +255,7 @@ const Solutions = () => {
       </div>
 
       <div
-        className="absolute -top-40 -left-40 w-96 h-96 rounded-full opacity-[0.04] pointer-events-none"
+        className="absolute -top-32 -left-32 w-80 h-80 rounded-full opacity-[0.04] pointer-events-none"
         style={{ background: colors.primaryColor }}
       />
     </section>

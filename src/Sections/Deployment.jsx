@@ -109,22 +109,22 @@ const Deployment = () => {
     <section
       ref={sectionRef}
       id="deployment"
-      className="relative overflow-hidden font-sans py-14 sm:py-20"
+      className="relative overflow-hidden font-sans py-12 sm:py-16"
       style={{ background: colors.primaryColor }}
     >
-      <div className="relative z-10 max-w-7xl mx-auto px-6 sm:px-10">
-        <div className="text-center max-w-2xl mx-auto mb-12">
-          <p className="reveal-header text-xs font-medium tracking-[0.2em] uppercase mb-4"
+      <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-8">
+        <div className="text-center max-w-2xl mx-auto mb-10">
+          <p className="reveal-header text-[0.65rem] font-medium tracking-[0.2em] uppercase mb-3"
              style={{ color: `${colors.secondaryColor}99` }}>
             From Survey to Smart Retail
           </p>
-          <h2 className="reveal-header text-3xl sm:text-4xl lg:text-5xl font-bold leading-[1.1]"
+          <h2 className="reveal-header text-2xl sm:text-3xl lg:text-4xl font-bold leading-[1.1]"
               style={{ color: colors.secondaryColor }}>
             Our{" "}
             <span style={{ color: colors.lightPrimary }}>Deployment</span>{" "}
             Process
           </h2>
-          <p className="reveal-header mt-4 text-sm sm:text-base leading-relaxed"
+          <p className="reveal-header mt-3 text-xs sm:text-sm leading-relaxed"
                style={{ color: `${colors.secondaryColor}99` }}>
             From site survey to smart retail in 4 simple steps.
           </p>
@@ -146,14 +146,14 @@ const Deployment = () => {
             return (
                 <div
                   key={i}
-                  className="group relative flex items-start py-4 lg:py-6"
+                  className="group relative flex items-start py-3 lg:py-5"
                 >
                   <div
-                    className={`hidden lg:flex w-1/2 items-center ${isLeft ? "justify-end pr-10" : "justify-start pl-10 order-2"}`}
+                    className={`hidden lg:flex w-1/2 items-center ${isLeft ? "justify-end pr-8" : "justify-start pl-8 order-2"}`}
                   >
                     <div
                       ref={(el) => { cardRefs.current[i] = el; }}
-                      className="w-full max-w-lg rounded-2xl p-5 sm:p-6 transition-all duration-500 group-hover:-translate-y-1 group-hover:scale-[1.02]"
+                      className="w-full max-w-md rounded-2xl p-4 sm:p-5 transition-all duration-500 group-hover:-translate-y-1 group-hover:scale-[1.02]"
                       style={{
                         background: `${colors.secondaryColor}0C`,
                         border: `1px solid ${colors.secondaryColor}15`,
@@ -171,16 +171,16 @@ const Deployment = () => {
                         e.currentTarget.style.boxShadow = "none";
                       }}
                     >
-                      <h3 className="text-lg sm:text-xl font-bold mb-3 transition-colors duration-300 group-hover:text-white"
+                      <h3 className="text-base sm:text-lg font-bold mb-2 transition-colors duration-300 group-hover:text-white"
                           style={{ color: colors.secondaryColor }}>
                         {s.title}
                       </h3>
-                      <p className="text-sm leading-relaxed transition-colors duration-300"
+                      <p className="text-xs leading-relaxed transition-colors duration-300"
                          style={{ color: `${colors.secondaryColor}AA` }}>
                         {s.desc}
                       </p>
                       <span
-                        className="inline-block mt-3 text-[0.6rem] font-semibold tracking-wider uppercase px-2.5 py-1 rounded-full transition-all duration-300 group-hover:bg-white group-hover:text-primaryColor"
+                        className="inline-block mt-2 text-[0.55rem] font-semibold tracking-wider uppercase px-2 py-0.5 rounded-full transition-all duration-300 group-hover:bg-white group-hover:text-primaryColor"
                         style={{
                           background: `${colors.secondaryColor}12`,
                           color: colors.secondaryColor,
@@ -193,30 +193,30 @@ const Deployment = () => {
 
                   <div className="hidden lg:flex absolute left-1/2 -translate-x-1/2 z-10">
                     <div
-                      className="w-12 h-12 rounded-full flex items-center justify-center shadow-lg transition-all duration-500 group-hover:scale-125 group-hover:shadow-[0_0_30px_rgba(163,177,138,0.5)]"
+                      className="w-10 h-10 rounded-full flex items-center justify-center shadow-lg transition-all duration-500 group-hover:scale-125 group-hover:shadow-[0_0_30px_rgba(163,177,138,0.5)]"
                       style={{
                         background: `linear-gradient(135deg, ${colors.primaryColor}, ${colors.lightPrimary})`,
                         color: colors.secondaryColor,
                       }}
                     >
-                      <Icon size={20} />
+                      <Icon size={16} />
                     </div>
                   </div>
 
                   <div className="hidden lg:block w-1/2" />
 
-                  <div className="lg:hidden flex items-start gap-4 w-full">
+                  <div className="lg:hidden flex items-start gap-3 w-full">
                     <div
-                      className="relative z-10 w-12 h-12 rounded-full flex items-center justify-center shrink-0 shadow-lg transition-all duration-500 group-hover:scale-125 group-hover:shadow-[0_0_30px_rgba(163,177,138,0.5)]"
+                      className="relative z-10 w-10 h-10 rounded-full flex items-center justify-center shrink-0 shadow-lg transition-all duration-500 group-hover:scale-125 group-hover:shadow-[0_0_30px_rgba(163,177,138,0.5)]"
                       style={{
                         background: `linear-gradient(135deg, ${colors.primaryColor}, ${colors.lightPrimary})`,
                         color: colors.secondaryColor,
                       }}
                     >
-                      <Icon size={20} />
+                      <Icon size={16} />
                     </div>
                     <div
-                      className="flex-1 rounded-2xl p-5 transition-all duration-500"
+                      className="flex-1 rounded-2xl p-4 transition-all duration-500"
                       style={{
                         background: `${colors.secondaryColor}0C`,
                         border: `1px solid ${colors.secondaryColor}15`,
@@ -233,16 +233,16 @@ const Deployment = () => {
                         e.currentTarget.style.boxShadow = "none";
                       }}
                     >
-                      <h3 className="text-base font-bold mb-2 transition-colors duration-300 group-hover:text-white"
+                      <h3 className="text-sm font-bold mb-1.5 transition-colors duration-300 group-hover:text-white"
                           style={{ color: colors.secondaryColor }}>
                         {s.title}
                       </h3>
-                      <p className="text-sm leading-relaxed"
+                      <p className="text-xs leading-relaxed"
                          style={{ color: `${colors.secondaryColor}AA` }}>
                         {s.desc}
                       </p>
                       <span
-                        className="inline-block mt-2 text-[0.55rem] font-semibold tracking-wider uppercase px-2 py-1 rounded-full transition-all duration-300 group-hover:bg-white group-hover:text-primaryColor"
+                        className="inline-block mt-1.5 text-[0.5rem] font-semibold tracking-wider uppercase px-1.5 py-0.5 rounded-full transition-all duration-300 group-hover:bg-white group-hover:text-primaryColor"
                         style={{
                           background: `${colors.secondaryColor}12`,
                           color: colors.secondaryColor,
@@ -259,7 +259,7 @@ const Deployment = () => {
       </div>
 
       <div
-        className="absolute -top-40 -right-40 w-96 h-96 rounded-full opacity-[0.04] pointer-events-none"
+        className="absolute -top-32 -right-32 w-80 h-80 rounded-full opacity-[0.04] pointer-events-none"
         style={{ background: colors.lightPrimary }}
       />
     </section>

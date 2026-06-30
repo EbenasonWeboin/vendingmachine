@@ -43,21 +43,21 @@ const Technology = () => {
     <section
       ref={sectionRef}
       id="technology"
-      className="relative overflow-hidden font-sans py-20 sm:py-28"
+      className="relative overflow-hidden font-sans py-16 sm:py-20"
       style={{ background: colors.primaryColor }}
     >
-      <div className="relative z-10 max-w-7xl mx-auto px-6 sm:px-10">
-        <div className="text-center max-w-2xl mx-auto mb-16">
-          <p className="blur-reveal text-xs font-medium tracking-[0.2em] uppercase mb-4"
+      <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-8">
+        <div className="text-center max-w-2xl mx-auto mb-12">
+          <p className="blur-reveal text-[0.65rem] font-medium tracking-[0.2em] uppercase mb-3"
              style={{ color: `${colors.secondaryColor}99` }}>
             Built Different
           </p>
-          <h2 className="blur-reveal text-3xl sm:text-4xl lg:text-5xl font-bold leading-[1.1]"
+          <h2 className="blur-reveal text-2xl sm:text-3xl lg:text-4xl font-bold leading-[1.1]"
               style={{ color: colors.secondaryColor }}>
             Technology That{" "}
             <span style={{ color: colors.lightPrimary }}>Just Works</span>
           </h2>
-          <p className="blur-reveal mt-4 text-sm sm:text-base leading-relaxed"
+          <p className="blur-reveal mt-3 text-xs sm:text-sm leading-relaxed"
                style={{ color: `${colors.secondaryColor}99` }}>
             Every machine ships with a purpose-built tech stack designed for
             reliability, security, and real-time intelligence.
@@ -71,26 +71,26 @@ const Technology = () => {
             return (
               <div
                 key={i}
-                className={`blur-reveal group rounded-2xl p-5 sm:p-6 transition-all duration-500 hover:-translate-y-1 ${spanMap[i]}`}
+                className={`blur-reveal group rounded-2xl p-4 sm:p-5 transition-all duration-500 hover:-translate-y-1 ${spanMap[i]}`}
                 style={{
                   background: `${colors.secondaryColor}08`,
                   border: `1px solid ${colors.secondaryColor}15`,
                 }}
               >
                 <div
-                  className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl flex items-center justify-center mb-3 sm:mb-4 transition-colors duration-300 group-hover:scale-110"
+                  className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl flex items-center justify-center mb-2 sm:mb-3 transition-colors duration-300 group-hover:scale-110"
                   style={{
                     background: `${colors.lightPrimary}20`,
                     color: colors.lightPrimary,
                   }}
                 >
-                  <Icon size={22} />
+                  <Icon size={18} />
                 </div>
-                <h3 className={`font-bold mb-2 ${wide ? "text-lg sm:text-xl" : "text-sm sm:text-base"}`}
+                <h3 className={`font-bold mb-1.5 ${wide ? "text-base sm:text-lg" : "text-xs sm:text-sm"}`}
                     style={{ color: colors.secondaryColor }}>
                   {feat.title}
                 </h3>
-                <p className={`leading-relaxed ${wide ? "text-xs sm:text-sm" : "text-[0.7rem] sm:text-xs"}`}
+                <p className={`leading-relaxed ${wide ? "text-[0.65rem] sm:text-xs" : "text-[0.6rem] sm:text-[0.65rem]"}`}
                    style={{ color: `${colors.secondaryColor}99` }}>
                   {feat.desc}
                 </p>
@@ -99,9 +99,9 @@ const Technology = () => {
           })}
         </div>
 
-        <div className="blur-reveal mt-12 sm:mt-16 text-center">
+        <div className="blur-reveal mt-10 sm:mt-12 text-center">
           <div
-            className="inline-flex flex-col sm:flex-row items-center gap-3 px-5 sm:px-6 py-4 rounded-2xl"
+            className="inline-flex flex-col sm:flex-row items-center gap-2 px-4 sm:px-5 py-3 rounded-xl"
             style={{
               background: `${colors.secondaryColor}08`,
               border: `1px solid ${colors.secondaryColor}12`,
@@ -111,7 +111,7 @@ const Technology = () => {
               {[1, 2, 3, 4].map((n) => (
                 <div
                   key={n}
-                  className="w-6 h-6 sm:w-7 sm:h-7 rounded-full flex items-center justify-center font-bold text-[0.45rem] sm:text-[0.5rem] ring-2"
+                  className="w-5 h-5 sm:w-6 sm:h-6 rounded-full flex items-center justify-center font-bold text-[0.4rem] sm:text-[0.45rem] ring-2"
                   style={{
                     background: `${colors.lightPrimary}30`,
                     color: colors.secondaryColor,
@@ -122,7 +122,7 @@ const Technology = () => {
                 </div>
               ))}
             </span>
-            <span className="text-xs sm:text-sm font-medium text-center sm:text-left"
+            <span className="text-[0.6rem] sm:text-xs font-medium text-center sm:text-left"
                   style={{ color: `${colors.secondaryColor}CC` }}>
               Seamless integration with your existing infrastructure
             </span>
@@ -131,11 +131,11 @@ const Technology = () => {
       </div>
 
       <div
-        className="absolute -top-40 -left-40 w-96 h-96 rounded-full opacity-[0.03] pointer-events-none"
+        className="absolute -top-32 -left-32 w-80 h-80 rounded-full opacity-[0.03] pointer-events-none"
         style={{ background: colors.secondaryColor }}
       />
       <div
-        className="absolute -bottom-40 -right-40 w-96 h-96 rounded-full opacity-[0.03] pointer-events-none"
+        className="absolute -bottom-32 -right-32 w-80 h-80 rounded-full opacity-[0.03] pointer-events-none"
         style={{ background: colors.lightPrimary }}
       />
     </section>
