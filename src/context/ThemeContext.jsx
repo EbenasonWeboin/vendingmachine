@@ -1,10 +1,10 @@
 import { createContext, useContext, useState } from "react";
-import { brownTheme, themes } from "../Colors/Colors";
+import { oliveTheme, themes } from "../Colors/Colors";
 
 const ThemeContext = createContext(null);
 
 export const ThemeProvider = ({ children }) => {
-  const [currentTheme, setCurrentTheme] = useState(brownTheme);
+  const [currentTheme, setCurrentTheme] = useState(oliveTheme);
 
   return (
     <ThemeContext.Provider value={{ colors: currentTheme, setTheme: setCurrentTheme, themes }}>
@@ -16,7 +16,7 @@ export const ThemeProvider = ({ children }) => {
 // eslint-disable-next-line react-refresh/only-export-components
 export const useColors = () => {
   const ctx = useContext(ThemeContext);
-  if (!ctx) return brownTheme;
+  if (!ctx) return oliveTheme;
   return ctx.colors;
 };
 
