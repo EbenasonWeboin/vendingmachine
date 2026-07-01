@@ -174,7 +174,8 @@ const Solutions = () => {
               return (
                 <div
                   key={i}
-                  className="shrink-0 rounded-2xl p-4 sm:p-5 transition-all duration-500"
+                  className="shrink-0 rounded-2xl p-4 sm:p-5 transition-all duration-500 " 
+                  onMouseEnter = {()=>{setActiveIdx(i)}}
                   style={{
                     width: cardWidth,
                     background: colors.secondaryColor,
@@ -183,6 +184,7 @@ const Solutions = () => {
                     opacity: i === activeIdx ? 1 : 0.55,
                     transform: i === activeIdx ? "scale(1)" : "scale(0.95)",
                     transition: "opacity 0.5s, transform 0.5s",
+                    
                   }}
                 >
                   <div

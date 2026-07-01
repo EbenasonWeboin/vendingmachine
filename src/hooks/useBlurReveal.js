@@ -24,13 +24,13 @@ const useBlurReveal = (selector = '.blur-reveal') => {
           opacity: 1,
           filter: 'blur(0px)',
           y: 0,
-          duration: 0.9,
-          delay: 0.12 * i,
-          ease: 'power3.out',
+          duration: 0.3,
+          delay: 0.05 * i,
+          ease: 'expo.inOut',
           scrollTrigger: {
-            trigger: target,
-            start: 'top 88%',
-            toggleActions: 'play none none none',
+            trigger: sectionRef.current,
+            start: 'top 90%',
+            toggleActions: "play none none none"
           },
         }
       );

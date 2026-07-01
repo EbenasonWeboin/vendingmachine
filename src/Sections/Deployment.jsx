@@ -89,11 +89,11 @@ const Deployment = () => {
           opacity: 1,
           filter: "blur(0px)",
           x: 0,
-          duration: 0.9,
-          ease: "power3.out",
+          duration: 0.5,
+          ease: "expo.in",
           scrollTrigger: {
             trigger: card,
-            start: "top 80%",
+            start: "top 90%",
             toggleActions: "play none none none",
           },
         }
@@ -108,8 +108,8 @@ const Deployment = () => {
           opacity: 1,
           filter: "blur(0px)",
           y: 0,
-          duration: 0.8,
-          delay: 0.1 * i,
+          duration: 0.5,
+          delay: 0.05 * i,
           ease: "power3.out",
           scrollTrigger: {
             trigger: target,
