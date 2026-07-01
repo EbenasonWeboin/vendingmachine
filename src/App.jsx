@@ -6,10 +6,12 @@ import Deployment from './Sections/Deployment'
 import Solutions from './Sections/Solutions'
 import Contact from './Sections/Contact'
 import Footer from './Sections/Footer'
+import ThemeSelector from './components/ThemeSelector'
 
 const App = () => {
   return (
     <>
+    <ThemeSelector/>
     <Navbar/>
       <Hero />
       <Machines/>

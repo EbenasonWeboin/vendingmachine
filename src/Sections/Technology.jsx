@@ -1,4 +1,4 @@
-import colors from "../Colors/Colors";
+import { useColors } from "../context/ThemeContext";
 import { Cpu, Wifi, Smartphone, Shield, RefreshCw, BarChart3 } from "lucide-react";
 import useBlurReveal from "../hooks/useBlurReveal";
 
@@ -38,6 +38,7 @@ const techFeatures = [
 const spanMap = ["lg:col-span-7", "lg:col-span-5", "lg:col-span-5", "lg:col-span-7", "lg:col-span-6", "lg:col-span-6"];
 
 const Technology = () => {
+  const colors = useColors();
   const sectionRef = useBlurReveal();
   return (
     <section

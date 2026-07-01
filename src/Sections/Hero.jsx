@@ -1,12 +1,11 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import gsap from "gsap";
-import colors from "../Colors/Colors";
+import { useColors } from "../context/ThemeContext";
 import BlueVM from "../assets/BlueVM.png";
 import GreenVM from "../assets/GreenVM.png";
 import PurpleVM from "../assets/PurpleVM.png";
 import YellowVM from "../assets/YellowVM.png";
 import useBlurReveal from "../hooks/useBlurReveal";
-import { color } from "framer-motion";
 
 const vmImages = [
   { src: BlueVM, alt: "Blue Vending Machine" },
@@ -24,6 +23,7 @@ const partners = [
 ];
 
 const Hero = () => {
+  const colors = useColors();
   const sectionRef = useBlurReveal();
   const rightRef = useRef(null);
   const [activeIndex, setActiveIndex] = useState(0);
@@ -161,6 +161,7 @@ const Hero = () => {
                 style={{
                   background: p.bg,
                   zIndex: partners.length - i,
+                  boxShadow: `0 0 0 3px ${colors.primaryColor}`
                 }}
               >
                 {p.initials}

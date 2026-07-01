@@ -1,7 +1,7 @@
 import { useRef, useEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import colors from "../Colors/Colors";
+import { useColors } from "../context/ThemeContext";
 import { ClipboardList, Settings, Truck, Activity } from "lucide-react";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -33,29 +33,33 @@ const steps = [
   },
 ];
 
-const CardContent = ({ s }) => (
-  <>
-    <h3 className="text-base sm:text-lg font-bold mb-2 transition-colors duration-300 group-hover:text-white"
-        style={{ color: colors.secondaryColor }}>
-      {s.title}
-    </h3>
-    <p className="text-xs leading-relaxed transition-colors duration-300"
-       style={{ color: `${colors.secondaryColor}AA` }}>
-      {s.desc}
-    </p>
-    <span
-      className="inline-block mt-2 text-[0.55rem] font-semibold tracking-wider uppercase px-2 py-0.5 rounded-full transition-all duration-300 group-hover:bg-white group-hover:text-primaryColor"
-      style={{
-        background: `${colors.secondaryColor}12`,
-        color: colors.secondaryColor,
-      }}
-    >
-      Step {s.step}
-    </span>
-  </>
-);
+const CardContent = ({ s }) => {
+  const colors = useColors();
+  return (
+    <>
+      <h3 className="text-base sm:text-lg font-bold mb-2 transition-colors duration-300 group-hover:text-white"
+          style={{ color: colors.secondaryColor }}>
+        {s.title}
+      </h3>
+      <p className="text-xs leading-relaxed transition-colors duration-300"
+         style={{ color: `${colors.secondaryColor}AA` }}>
+        {s.desc}
+      </p>
+      <span
+        className="inline-block mt-2 text-[0.55rem] font-semibold tracking-wider uppercase px-2 py-0.5 rounded-full transition-all duration-300 group-hover:bg-white group-hover:text-primaryColor"
+        style={{
+          background: `${colors.secondaryColor}12`,
+          color: colors.secondaryColor,
+        }}
+      >
+        Step {s.step}
+      </span>
+    </>
+  );
+};
 
 const Deployment = () => {
+  const colors = useColors();
   const sectionRef = useRef(null);
   const lineRef = useRef(null);
 
@@ -82,7 +86,7 @@ const Deployment = () => {
     }
 
     const cardElements = el.querySelectorAll(".deployment-card");
-    cardElements.forEach((card, i) => {
+    cardElements.forEach((card) => {
       gsap.fromTo(card,
         { opacity: 0, filter: "blur(10px)", x: 60 },
         {

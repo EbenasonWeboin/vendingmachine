@@ -1,4 +1,4 @@
-import colors from "../Colors/Colors";
+import { useColors } from "../context/ThemeContext";
 import { Mail, Phone, MapPin, Send } from "lucide-react";
 import useBlurReveal from "../hooks/useBlurReveal";
 
@@ -9,6 +9,7 @@ const contactInfo = [
 ];
 
 const Contact = () => {
+  const colors = useColors();
   const sectionRef = useBlurReveal();
   return (
     <section

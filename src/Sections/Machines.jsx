@@ -1,4 +1,4 @@
-import colors from "../Colors/Colors";
+import { useColors } from "../context/ThemeContext";
 import BlueVM from "../assets/BlueVM.png";
 import GreenVM from "../assets/GreenVM.png";
 import PurpleVM from "../assets/PurpleVM.png";
@@ -34,6 +34,7 @@ const machineCategories = [
 ];
 
 const Machines = () => {
+  const colors = useColors();
   const sectionRef = useBlurReveal();
   return (
     <section

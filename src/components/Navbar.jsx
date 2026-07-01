@@ -2,12 +2,9 @@
 
 import { useState, useEffect, useRef } from "react";
 import gsap from "gsap";
-import { motion, AnimatePresence, px } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
-import { colors } from "../Colors/Colors";
-
-
-const { primaryColor, secondaryColor, lightPrimary, darkPrimary, darkText } = colors;
+import { useColors } from "../context/ThemeContext";
 
 const navLinks = [
   { name: "Home", href: "#home", section: "home" },
@@ -30,6 +27,8 @@ function rgba(hex, alpha) {
 }
 
 export default function Navbar() {
+  const colors = useColors();
+  const { primaryColor, secondaryColor, lightPrimary, darkPrimary, darkText } = colors;
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
   const [hoveredLink, setHoveredLink] = useState(null);

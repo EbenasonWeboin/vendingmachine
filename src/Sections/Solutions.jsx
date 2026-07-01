@@ -1,6 +1,6 @@
 import { useRef, useState, useEffect, useCallback } from "react";
 import gsap from "gsap";
-import colors from "../Colors/Colors";
+import { useColors } from "../context/ThemeContext";
 import { Building2, GraduationCap, Hospital, ShoppingBag, Dumbbell, Hotel, ChevronLeft, ChevronRight } from "lucide-react";
 import useBlurReveal from "../hooks/useBlurReveal";
 
@@ -46,6 +46,7 @@ const solutions = [
 const gap = 16;
 
 const Solutions = () => {
+  const colors = useColors();
   const sectionRef = useBlurReveal(".blur-reveal-header");
   const scrollRef = useRef(null);
   const containerRef = useRef(null);

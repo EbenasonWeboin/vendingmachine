@@ -1,7 +1,8 @@
-import colors from "../Colors/Colors";
+import { useColors } from "../context/ThemeContext";
 import { Mail, Phone, MapPin } from "lucide-react";
 
 const Footer = () => {
+  const colors = useColors();
   return (
     <footer
       className="relative overflow-hidden font-sans"
